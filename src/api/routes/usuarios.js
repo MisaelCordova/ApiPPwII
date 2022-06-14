@@ -2,6 +2,22 @@ const express = require('express')
 const router = express.Router()
 const Usuario = require('../models/Usuarios')
 
+router.post('/login',async(req,res)=>{
+    if(!req.body.user ||!req.body.senha){
+        res.status(400).json({
+            message:
+            'user e senha obrigatórios'
+        })
+    }
+    const usuario = await Usuario.findOne({ user: req.body.user }).exec()
+    console.log(usuario)
+    if(!usuario){
+        return res.sendStatus(401);
+    }
+    //usar jwt
+})
+
+
 // Retornar todos os personagens
 router.get('/', async (req, res) =>{
     var nLimit = parseInt(req.query.limit) || 10 

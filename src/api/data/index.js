@@ -1,5 +1,4 @@
 const mongoose = require('mongoose')
-const url = `mongodb://localhost:27017/Funko`
 mongoose.connect(process.env.DATABASE_URI, {useNewUrlParser: true})
 
 mongoose.connection.on('connected', function(){
