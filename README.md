@@ -1,6 +1,8 @@
 # ApiPPwII
 Trabalho de Programação Web II
-##Rotas
+
+## Rotas
+
 **Buscar todos usuários**
 GET:http://localhost:3500/api/usuario/
 
