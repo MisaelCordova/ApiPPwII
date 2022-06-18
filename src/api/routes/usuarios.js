@@ -14,15 +14,11 @@ router.post('/login',async(req,res)=>{
     if(!usuario){
         return res.sendStatus(401);
     }
-    //usar jwt
+    
 })
-
-
 // Retornar todos os personagens
 router.get('/', async (req, res) =>{
-    var nLimit = parseInt(req.query.limit) || 10 
-    var nSkip = parseInt(req.query.skip)
-    const usuario = await Usuario.find().limit(nLimit).skip(nSkip)
+    const usuario = await Usuario.find().populate('funkos')
     res.json(usuario)
 })
 
@@ -30,7 +26,7 @@ router.get('/', async (req, res) =>{
 router.get('/:id', async (req, res, next) => {
     try{
         const id = req.params.id
-        var usuario = await Usuario.findById(id)
+        var usuario = await Usuario.findById(id).populate('funkos')
         if(!usuario) return res.status(404).json({
             "erro": "Usuário não encontrado"
         })
@@ -76,7 +72,7 @@ router.put('/:id', async (req, res) => {
 // Deletar um usuario
 router.delete('/:id', async (req, res) => {
     const id = req.params.id
-    const usuario = await Usuario.findByIdAndDelete(id)
+    const usuario = await Usuario.findByIdAndRemove(id)
     res.json(usuario)
 })
 

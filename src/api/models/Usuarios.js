@@ -1,5 +1,5 @@
 const mongoose = require('../data')
-
+const Schema = mongoose.Schema;
 var userSchema = new mongoose.Schema({
     nome: {
         type: String,
@@ -13,26 +13,12 @@ var userSchema = new mongoose.Schema({
         type:String,
         required:true,
     },
-     
-    funkos:{
-        type:Array,
-        descricao:{
-            type:String,
-            required:true,
-        },
-        valor: {
-            type: Number,
-            required:true,
-        },
-        url:{
-            type:String,
-            required:true,
-        }, 
-        sale:{
-            type:Boolean,
-            required:true
+    funkos: [
+        {
+          type: Schema.Types.ObjectId,
+          ref: 'Funko'
         }
-    }
+      ]
 }, 
 )
 

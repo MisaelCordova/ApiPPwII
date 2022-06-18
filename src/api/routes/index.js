@@ -5,6 +5,6 @@ const funkos = require('./funkos')
 
 router.use(express.json())
 router.use('/usuario', usuario)
-router.use('/funkos',funkos)
+router.use('/funko',funkos)
 
 module.exports = router;
