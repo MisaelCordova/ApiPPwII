@@ -2,6 +2,7 @@ const express = require('express')
 const router = express.Router()
 const Funko = require('../models/Funkos')
 const Usuario = require('../models/Usuarios')
+const bcrypt = require('bcrypt')
 
 router.post('/login',async(req,res)=>{
     if(!req.body.user ||!req.body.senha){
@@ -11,9 +12,24 @@ router.post('/login',async(req,res)=>{
         })
     }
     const usuario = await Usuario.findOne({ user: req.body.user }).exec()
-    console.log(usuario)
     if(!usuario){
         return res.sendStatus(401);
+    }
+    console.log(usuario.senha)
+    console.log(req.body.senha)
+    const verificarSenha = await bcrypt.compare(req.body.senha, usuario.senha)
+    console.log(verificarSenha)
+    if(verificarSenha){
+        res.json({
+            id:usuario._id,
+            nome:usuario.nome,
+            user:usuario.user,
+        })
+    }else{
+        res.status(401).json({
+            message:
+            'Senha incorreta'
+        })
     }
     
 })
@@ -51,6 +67,8 @@ router.post('/', async (req, res) => {
     if(checkDuplicate.length!==0){
         return res.sendStatus(409)
     }
+    hashedSenha = await bcrypt.hash(req.body.senha,10)
+    req.body.senha = hashedSenha
     const usuario = new Usuario(req.body)
     var resultado = await usuario.save()
     return res.json(usuario)

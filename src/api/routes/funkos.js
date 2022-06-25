@@ -54,8 +54,4 @@ router.delete('/:id', async (req, res) => {
     res.json(funko)
 })
 
-//fazer delete
-//findByIdAndRemove()
-//quando deletar usuario funko.deletemany(usuario: _id)
-
 module.exports = router
