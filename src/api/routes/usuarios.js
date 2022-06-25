@@ -1,5 +1,6 @@
 const express = require('express')
 const router = express.Router()
+const Funko = require('../models/Funkos')
 const Usuario = require('../models/Usuarios')
 
 router.post('/login',async(req,res)=>{
@@ -72,8 +73,17 @@ router.put('/:id', async (req, res) => {
 // Deletar um usuario
 router.delete('/:id', async (req, res) => {
     const id = req.params.id
-    const usuario = await Usuario.findByIdAndRemove(id)
-    res.json(usuario)
+    const funko = await Funko.find({ usuario: id});
+    if(funko.length===0){
+        const usuario = await Usuario.findByIdAndRemove(id)
+        res.json(usuario)
+    }else{
+        return res.status(409).json({
+            message:
+            "Requisição invalida. Para o usuario ser excluído não pode ter nenhum funko cadastrado "
+        })
+    }
+    
 })
 
 module.exports = router

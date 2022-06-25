@@ -22,7 +22,7 @@ GET:http://localhost:3500/api/funko/
 GET:http://localhost:3500/api/funko/:id
 
 **Cadastrar um funko**
-POST:http://localhost:3500/api/funko/
+POST:http://localhost:3500/api/funko/:idUsuario
 
 **Editar um funko**
 PUT:http://localhost:3500/api/funko/

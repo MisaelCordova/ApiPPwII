@@ -14,7 +14,7 @@ router.get('/:id', async (req, res, next) => {
         const id = req.params.id
         const funko = await Funko.findById(id)
         if (!funko) return res.status(404).json({
-            "erro": "Usuário não encontrado"
+            "erro": "Funko não encontrado"
         })
         res.json(funko)
     } catch (err) {
@@ -48,6 +48,12 @@ router.put("/:id", async(req,res)=>{
     const atualFunko = await Funko.findByIdAndUpdate(id, novoFunko, {new:true})
     return res.json(atualFunko)
 })
+router.delete('/:id', async (req, res) => {
+    const id = req.params.id
+    const funko = await Funko.findByIdAndRemove(id); 
+    res.json(funko)
+})
+
 //fazer delete
 //findByIdAndRemove()
 //quando deletar usuario funko.deletemany(usuario: _id)
