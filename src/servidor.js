@@ -3,7 +3,6 @@ const express = require('express')
 const app = express()
 const routes = require('./api/routes')
 const PORT = process.env.PORT
-app.use('/api', routes)
 const cors = require('cors')
 const corsOptions = {
     origin: 'http://localhost:3000',
@@ -11,6 +10,8 @@ const corsOptions = {
     optionSuccessStatus: 200
   };  
 app.use(cors(corsOptions));
+
+app.use('/api', routes)
 
 app.use(function(err, req, res, next){
     res.status(500).json({
@@ -20,4 +21,4 @@ app.use(function(err, req, res, next){
 
 app.listen(PORT,function(){
     console.log("lendo",PORT)
-})    
+})
