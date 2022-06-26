@@ -15,10 +15,9 @@ router.post('/login',async(req,res)=>{
     if(!usuario){
         return res.sendStatus(401);
     }
-    console.log(usuario.senha)
-    console.log(req.body.senha)
     const verificarSenha = await bcrypt.compare(req.body.senha, usuario.senha)
     console.log(verificarSenha)
+
     if(verificarSenha){
         res.json({
             id:usuario._id,
@@ -67,7 +66,8 @@ router.post('/', async (req, res) => {
     if(checkDuplicate.length!==0){
         return res.sendStatus(409)
     }
-    hashedSenha = await bcrypt.hash(req.body.senha,10)
+    let hashedSenha = await bcrypt.hash(req.body.senha,10)
+
     req.body.senha = hashedSenha
     const usuario = new Usuario(req.body)
     var resultado = await usuario.save()
@@ -94,6 +94,11 @@ router.delete('/:id', async (req, res) => {
     const funko = await Funko.find({ usuario: id});
     if(funko.length===0){
         const usuario = await Usuario.findByIdAndRemove(id)
+        if (!usuario) {
+            return res
+              .status(404)
+              .json({ message: 'Nenhum Funko encontrado com esse ID!' });
+          }
         res.json(usuario)
     }else{
         return res.status(409).json({

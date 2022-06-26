@@ -23,7 +23,6 @@ router.get('/:id', async (req, res, next) => {
 })
 router.post('/:id', async (req, res) => {
     const id = req.params.id
-    console.log(req.body)
     if (!req.body.descricao || !req.body.valor || !req.body.sale) {
         return res.status(400).json({
             message:
@@ -31,9 +30,10 @@ router.post('/:id', async (req, res) => {
         });
     }
     req.body.usuario = id
-    const funko = new Funko(req.body)
+    console.log(req.body)
     const resultado = await funko.save()
-    const usuario = await Usuario.findOneAndUpdate(id, { $push: { funkos: resultado._id } }, { new: true })
+    const usuario = await Usuario.findOneAndUpdate({_id: id}, { $push: { funkos: resultado._id } }, { new: true })
+    console.log(usuario)
     return res.json(resultado)
 })
 router.put("/:id", async(req,res)=>{
@@ -49,8 +49,15 @@ router.put("/:id", async(req,res)=>{
     return res.json(atualFunko)
 })
 router.delete('/:id', async (req, res) => {
+
     const id = req.params.id
-    const funko = await Funko.findByIdAndRemove(id); 
+    const funko = await Funko.findByIdAndRemove(id);
+    if (!funko) {
+        return res
+          .status(404)
+          .json({ message: 'Nenhum Funko encontrado com esse ID!' });
+      }
+     
     res.json(funko)
 })
 
