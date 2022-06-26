@@ -9,6 +9,26 @@ router.get('/', async (req, res, ) => {
     const funko = await Funko.find()
     res.json(funko)
 })
+router.get('/desc', async(req,res)=>{
+    const funko = await Funko.find()
+    funko.sort((a,b)=>{
+        if(a.descricao.toUpperCase()>b.descricao.toUpperCase()){
+            return 1
+       }
+       if(a.descricao.toUpperCase()<b.descricao.toUpperCase()){
+            return -1
+       }
+       return 0 
+    })
+    res.json(funko)
+})
+router.get('/valor', async(req,res)=>{
+    const funko = await Funko.find()
+    funko.sort((a,b)=>{
+        return a.valor - b.valor
+    })
+    res.json(funko)
+})
 router.get('/:id', async (req, res, next) => {
     try {
         const id = req.params.id
