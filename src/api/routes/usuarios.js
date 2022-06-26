@@ -84,6 +84,8 @@ router.put('/:id', async (req, res) => {
           });
     }
     const novoUsuario = req.body
+    const senhaEncriptada = await bcrypt.hash(novoUsuario.senha, 10)
+    novoUsuario.senha = senhaEncriptada
     const atualUsuario = await Usuario.findByIdAndUpdate(id, novoUsuario, {new: true})
     return res.json(atualUsuario)
 })
