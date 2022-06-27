@@ -82,12 +82,6 @@ router.put('/:id', async (req, res) => {
               'Requisição inválida. Os campos nome, user, senha são obrigatórios!'
           });
     }
-    const checkDuplicate = await Usuario.find({
-        $or: [{ user: req.body.user } ]
-    })
-    if(checkDuplicate.length!==0){
-        return res.sendStatus(409)
-    }
     const novoUsuario = req.body
     const senhaEncriptada = await bcrypt.hash(novoUsuario.senha, 10)
     novoUsuario.senha = senhaEncriptada
