@@ -16,7 +16,6 @@ router.post('/login',async(req,res)=>{
         return res.sendStatus(401);
     }
     const verificarSenha = await bcrypt.compare(req.body.senha, usuario.senha)
-    console.log(verificarSenha)
 
     if(verificarSenha){
         res.json({
@@ -105,7 +104,7 @@ router.delete('/:id', async (req, res) => {
         if (!usuario) {
             return res
               .status(404)
-              .json({ message: 'Nenhum Funko encontrado com esse ID!' });
+              .json({ message: 'Nenhum Usuário encontrado com esse ID!' });
           }
         res.json(usuario)
     }else{

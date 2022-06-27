@@ -43,7 +43,7 @@ router.get('/:id', async (req, res, next) => {
 })
 router.post('/:id', async (req, res) => {
     const id = req.params.id
-    console.log(req.body)
+
     if (!req.body.descricao || !req.body.valor || req.body.sale === null) {
         return res.status(400).json({
             message:
@@ -51,7 +51,7 @@ router.post('/:id', async (req, res) => {
         });
     }
     req.body.usuario = id
-    console.log(req.body)
+
     const resultado = await Funko.create({
         descricao: req.body.descricao,
         valor: req.body.valor,
@@ -60,7 +60,6 @@ router.post('/:id', async (req, res) => {
         usuario: req.params.id
       });
     const usuario = await Usuario.findOneAndUpdate({_id: id}, { $push: { funkos: resultado._id } }, { new: true })
-    console.log(usuario)
     return res.json(resultado)
 })
 router.put("/:id", async(req,res)=>{
