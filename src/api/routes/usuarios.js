@@ -60,7 +60,7 @@ router.post('/', async (req, res) => {
           });
     }
     const checkDuplicate = await Usuario.find({
-        $or: [{ nome: req.body.nome },{ user: req.body.user }, ]
+        $or: [{ user: req.body.user }]
     })
     if(checkDuplicate.length!==0){
         return res.sendStatus(409)
@@ -83,7 +83,7 @@ router.put('/:id', async (req, res) => {
           });
     }
     const checkDuplicate = await Usuario.find({
-        $or: [{ nome: req.body.nome },{ user: req.body.user }, ]
+        $or: [{ user: req.body.user } ]
     })
     if(checkDuplicate.length!==0){
         return res.sendStatus(409)
