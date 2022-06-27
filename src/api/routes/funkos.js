@@ -65,7 +65,7 @@ router.post('/:id', async (req, res) => {
 })
 router.put("/:id", async(req,res)=>{
     const id = req.params.id
-    if(!req.body.descricao||!req.body.valor||!req.body.sale){
+    if(!req.body.descricao||!req.body.valor||req.body.sale === null){
         return res.status(400).json({
             message:
             'Requisição inválida. Os campos decricao, valor e sale são obrigatórios!'
