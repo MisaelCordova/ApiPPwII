@@ -3,6 +3,7 @@ Trabalho de Programação Web II
 
 ## Rotas
 **rota de login**
+
 POST:http://localhost:3500/api/usuario/login
 **Buscar todos usuários**
 GET:http://localhost:3500/api/usuario/
